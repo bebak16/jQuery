@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+div{text-align: center;background-color: #B8B8B8;padding: 15px;}
+.tablec{ margin: 20px; border-collapse: collapse; }
+th { border : 1px solid black; padding: 10px; background: #e0ebeb; }
+td{ border : 1px solid black; padding: 10px; }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script> src="./mockData.js"
+
+$(document).ready(function(){
+  var mockData = {};
+  $.get("https://jsonplaceholder.typicode.com/comments", function(data, status){   
+    const header = Object.keys(data[0]);
+    mockData =   {
+    "headers" : header,
+    "data": {
+           "France" : Object.values(data[0]),
+           "Germany" : Object.values(data[1]),
+           "Japan" : Object.values(data[2]),
+           "Russia" : Object.values(data[3]),
+		   "China": Object.values(data[4]),
+		   "USA": Object.values(data[5]),
+       }
+   }
+  })
+
+  $("button").click(function(){
+  var content = "<tr><th>";
+  mockData.headers.map(i => { content += "<th>"+ i });
+
+ var body = Object.keys(mockData.data);
+ body.map(con => {
+   content += "<tr><th>" + con;
+   mockData.data[con].map(j => content += "<td>"+ j );
+ })
+$("table").append(content);
+$("button").attr("disabled", true);
+   });
+ });
+</script>
+</head>
+
+<body>
+<div>
+<h3>Codibility Table</h3>
+<button >Get Response</button>
+</div>
+<table class= "tablec"></table>
+</body>
+</html>
